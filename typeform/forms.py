@@ -49,6 +49,38 @@ class Forms:
         """
         methodType = 'put' if patch is False else 'patch'
         return self.__client.request(methodType, '/forms/%s' % uid, data=data)
+    
+    def responses(self, formId: str = ''
+        , page: int = None
+        , pageSize: int = 25
+        , since: str = None
+        , until: str = None
+        , after: str = None
+        , before: str = None
+        , includedResponseIds: str = None
+        , completed: str = None
+        , sort: str = None
+        , query: str = None
+        , fields: str = None) -> dict:
+        """
+        Retrieves a list of JSON response for a specific form ID in your Typeform account.
+        Returns form responses and date and time of form landing and submission.
+        """
+
+        return self.__client.request('get', '/forms/%s/responses' % formId, params={
+            'page': page,
+            'page_size': pageSize,
+            'since': since,
+            'until': until,
+            'after': after,
+            'before': before,
+            'included_response_ids': includedResponseIds,
+            'completed': completed,
+            'sort': sort,
+            'query': query,
+            'fields': fields
+        })
+
 
 
 class FormMessages:
@@ -70,3 +102,4 @@ class FormMessages:
         Return a `str` based on success of change, `OK` on success, otherwise an error message.
         """
         return self.__client.request('put', '/forms/%s/messages' % uid, data=data)
+
